@@ -33,10 +33,10 @@
 #include <stdarg.h>
 #include <errno.h>
 #include <zlib.h>
+#include "config.h"
 #include "common.h"
 #include "myloader.h"
 #include "connection.h"
-#include "config.h"
 #include "getPassword.h"
 
 guint commit_count = 1000;
@@ -336,7 +336,7 @@ void restore_schema_post(MYSQL *conn) {
 
   while ((filename = g_dir_read_name(dir))) {
     if (!source_db ||
-        g_str_has_prefix(filename, g_strdup_printf("%s.", source_db))) {
+        g_str_has_prefix(filename, g_strdup_printf("%s-schema-post", source_db))) {
       if (g_strrstr(filename, "-schema-post.sql")) {
         split_file = g_strsplit(filename, "-schema-post.sql", 0);
         database = split_file[0];
